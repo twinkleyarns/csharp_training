@@ -36,20 +36,27 @@ namespace WebAddressbookTests
 
         public ContactHelper Remove(int p)
         {
-            InitContactModification(p);
-            RemoveContact();
+            SelectContactCheckbox(p);
+            ConfirmContactDeletion();
             return this;
         }
 
-        public ContactHelper RemoveContact()
+        public ContactHelper ConfirmContactDeletion()
         {
-            driver.FindElement(By.XPath("(//input[@name='update'])[3]")).Click();
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            driver.SwitchTo().Alert().Accept();
             return this;
         }
 
         public ContactHelper SubmitContactModification()
         {
             driver.FindElement(By.XPath("(//input[@name='update'])[2]")).Click();
+            return this;
+        }
+
+        public ContactHelper SelectContactCheckbox(int index)
+        {
+            driver.FindElement(By.XPath("//tr[" + ++index + "]/td/input")).Click();
             return this;
         }
 
