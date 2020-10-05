@@ -41,6 +41,21 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper CreateContactIfDoesNotExist(ContactData newData)
+        {
+            manager.Navigator.GoToHomePage();
+            if (!IsThereAnyContactCreated())
+            {
+                Create(newData);
+            }
+            return this;
+        }
+
+        public bool IsThereAnyContactCreated()
+        {
+            return IsElementPresent(By.XPath("//tr/td/input"));
+        }
+
         public ContactHelper ConfirmContactDeletion()
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
