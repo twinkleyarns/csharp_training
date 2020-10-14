@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace WebAddressbookTests
@@ -16,7 +17,13 @@ namespace WebAddressbookTests
             group.Header = "sss";
             group.Footer = "ddd";
 
+            List<GroupData> oldGroups = app.Groups.GetGroupsList();
             app.Groups.Create(group);
+            List<GroupData> newGroups = app.Groups.GetGroupsList();
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
         }
 
         [Test]
@@ -26,7 +33,13 @@ namespace WebAddressbookTests
             group.Header = "";
             group.Footer = "";
 
+            List<GroupData> oldGroups = app.Groups.GetGroupsList();
             app.Groups.Create(group);
+            List<GroupData> newGroups = app.Groups.GetGroupsList();
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
         }
     }
 }
