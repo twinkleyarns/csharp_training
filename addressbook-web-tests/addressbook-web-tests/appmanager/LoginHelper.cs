@@ -39,7 +39,7 @@ namespace WebAddressbookTests
                 int attempt = 0;
                 driver.FindElement(By.LinkText("Logout")).Click();
                 // wait for logout
-                while (IsLoggedIn() && attempt < 3)
+                while (IsLoggedIn() && attempt < 5)
                 {
                     if (IsElementPresent(By.Name("user"))) break;
                     attempt++;
