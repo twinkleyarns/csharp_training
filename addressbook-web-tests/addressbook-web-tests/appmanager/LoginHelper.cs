@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
@@ -41,6 +42,7 @@ namespace WebAddressbookTests
                 // wait for logout
                 while (IsLoggedIn() && attempt < 5)
                 {
+                    Thread.Sleep(1000);
                     if (IsElementPresent(By.Name("user"))) break;
                     attempt++;
                 }
