@@ -26,11 +26,13 @@ namespace WebAddressbookTests
             string lastName = cells[1].Text;
             string firstName = cells[2].Text;
             string address = cells[3].Text;
+            string allEmails = cells[4].Text;
             string allPhones = cells[5].Text;
 
             return new ContactData(firstName, lastName)
             {
                 Address = address,
+                AllEmails = allEmails,
                 AllPhones = allPhones
             };
         }
@@ -210,6 +212,60 @@ namespace WebAddressbookTests
             string text = driver.FindElement(By.TagName("label")).Text;
             Match m = new Regex(@"\d+").Match(text);
             return Int32.Parse(m.Value);
+        }
+
+        public string ConvertContactEditFormToDetailsFormat(ContactData fromForm)
+        {
+            string converted = String.Empty;
+            if (fromForm.FirstName != null && fromForm.FirstName != "")
+            {
+                converted = converted + fromForm.FirstName;
+            }
+            if (fromForm.LastName != null && fromForm.LastName != "")
+            {
+                converted = converted + " " + fromForm.LastName;
+            }
+            if (fromForm.Address != null && fromForm.Address != "")
+            {
+                converted = converted + "\r\n" + fromForm.Address;
+            }
+            if (fromForm.HomePhone != null && fromForm.HomePhone != ""
+                || fromForm.MobilePhone != null && fromForm.MobilePhone != ""
+                || fromForm.WorkPhone != null && fromForm.WorkPhone != "")
+            {
+                converted = converted + "\r\n";
+            }
+            if (fromForm.HomePhone != null && fromForm.HomePhone != "")
+            {
+                converted = converted + "\r\nH: " + fromForm.HomePhone;
+            }
+            if (fromForm.MobilePhone != null && fromForm.MobilePhone != "")
+            {
+                converted = converted + "\r\nM: " + fromForm.MobilePhone;
+            }
+            if (fromForm.WorkPhone != null && fromForm.WorkPhone != "")
+            {
+                converted = converted + "\r\nW: " + fromForm.WorkPhone;
+            }
+            if (fromForm.Email != null && fromForm.Email != ""
+                || fromForm.Email2 != null && fromForm.Email2 != ""
+                || fromForm.Email3 != null && fromForm.Email3 != "")
+            {
+                converted = converted + "\r\n";
+            }
+            if (fromForm.Email != null && fromForm.Email != "")
+            {
+                converted = converted + "\r\n" + fromForm.Email.Trim();
+            }
+            if (fromForm.Email2 != null && fromForm.Email2 != "")
+            {
+                converted = converted + "\r\n" + fromForm.Email2.Trim();
+            }
+            if (fromForm.Email3 != null && fromForm.Email3 != "")
+            {
+                converted = converted + "\r\n" + fromForm.Email3.Trim();
+            }
+            return converted.Trim();
         }
     }
 }

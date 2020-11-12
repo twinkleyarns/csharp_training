@@ -20,6 +20,7 @@ namespace WebAddressbookTests
             Assert.AreEqual(fromTable, fromForm);
             Assert.AreEqual(fromTable.Address, fromForm.Address);
             Assert.AreEqual(fromTable.AllPhones, fromForm.AllPhones);
+            Assert.AreEqual(fromTable.AllEmails, fromForm.AllEmails);
         }
 
         [Test]
@@ -30,62 +31,8 @@ namespace WebAddressbookTests
             string fromDetails = app.Contacts.GetContactInformationFromDetails(0);
             ContactData fromForm = app.Contacts.GetContactInformationFromEditForm(0);
 
-            string fromEditForm = ConvertFormToDetailsFormat(fromForm);
+            string fromEditForm = app.Contacts.ConvertContactEditFormToDetailsFormat(fromForm);
             Assert.AreEqual(fromDetails, fromEditForm);
-        }
-
-        private string ConvertFormToDetailsFormat(ContactData fromForm)
-        {
-            string converted = String.Empty;
-            if (fromForm.FirstName != null && fromForm.FirstName != "")
-            {
-                converted = converted + fromForm.FirstName;
-            }
-            if (fromForm.LastName != null && fromForm.LastName != "")
-            {
-                converted = converted + " " + fromForm.LastName;
-            }
-            if (fromForm.Address != null && fromForm.Address != "")
-            {
-                converted = converted + "\r\n" + fromForm.Address;
-            }
-            if (fromForm.HomePhone != null && fromForm.HomePhone != ""
-                || fromForm.MobilePhone != null && fromForm.MobilePhone != ""
-                || fromForm.WorkPhone != null && fromForm.WorkPhone != "")
-            {
-                converted = converted + "\r\n";
-            }
-            if (fromForm.HomePhone != null && fromForm.HomePhone != "")
-            {
-                converted = converted + "\r\nH: " + fromForm.HomePhone;
-            }
-            if (fromForm.MobilePhone != null && fromForm.MobilePhone != "")
-            {
-                converted = converted + "\r\nM: " + fromForm.MobilePhone;
-            }
-            if (fromForm.WorkPhone != null && fromForm.WorkPhone != "")
-            {
-                converted = converted + "\r\nW: " + fromForm.WorkPhone;
-            }
-            if (fromForm.Email != null && fromForm.Email != ""
-                || fromForm.Email2 != null && fromForm.Email2 != ""
-                || fromForm.Email3 != null && fromForm.Email3 != "")
-            {
-                converted = converted + "\r\n";
-            }
-            if (fromForm.Email != null && fromForm.Email != "")
-            {
-                converted = converted + "\r\n" + fromForm.Email;
-            }
-            if (fromForm.Email2 != null && fromForm.Email2 != "")
-            {
-                converted = converted + "\r\n" + fromForm.Email2;
-            }
-            if (fromForm.Email3 != null && fromForm.Email3 != "")
-            {
-                converted = converted + "\r\n" + fromForm.Email3;
-            }
-            return converted.Trim();
         }
     }
 }
