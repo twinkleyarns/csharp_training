@@ -94,9 +94,33 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper Modify(ContactData oldData, ContactData newData)
+        {
+            InitContactModification(oldData.Id);
+            FillContactForm(newData);
+            SubmitContactModification();
+            ReturnToHomePage();
+            return this;
+        }
+
         public ContactHelper Remove(int p)
         {
             SelectContactCheckbox(p);
+            ConfirmContactDeletion();
+            // wait for remove
+            int attempt = 0;
+            while (attempt < 5)
+            {
+                Thread.Sleep(1000);
+                if (IsElementPresent(By.XPath("//input[@value='Send e-Mail']"))) break;
+                attempt++;
+            }
+            return this;
+        }
+
+        public ContactHelper Remove(ContactData contact)
+        {
+            SelectContactCheckbox(contact.Id);
             ConfirmContactDeletion();
             // wait for remove
             int attempt = 0;
@@ -145,9 +169,21 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper SelectContactCheckbox(String id)
+        {
+            driver.FindElement(By.XPath("//input[@value='" + id + "']")).Click();
+            return this;
+        }
+
         public ContactHelper InitContactModification(int index)
         {
             driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + (index + 1) + "]")).Click();
+            return this;
+        }
+
+        public ContactHelper InitContactModification(String id)
+        {
+            driver.FindElement(By.XPath("//a[@href='edit.php?id=" + id + "']/img")).Click();
             return this;
         }
 
