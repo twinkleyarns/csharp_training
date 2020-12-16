@@ -10,6 +10,15 @@ namespace addressbook_tests_white
         [Test]
         public void TestGroupRemoving()
         {
+            if (app.Groups.GetGroupList().Count < 2)
+            {
+                GroupData newGroup = new GroupData()
+                {
+                    Name = "new"
+                };
+                app.Groups.Add(newGroup);
+            }
+
             List<GroupData> oldGroups = app.Groups.GetGroupList();
 
             app.Groups.Remove();
