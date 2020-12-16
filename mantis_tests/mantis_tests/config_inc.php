@@ -10,5 +10,6 @@ $g_smtp_port = '25';
 $g_smtp_host = 'localhost';
 
 $g_default_timezone       = 'Europe/Berlin';
+$g_default_language = 'english';
 
 $g_crypto_master_salt     = '+kmNrthmrFxqe4TWPzTuhPeIvlVjIXfGkaSLwjQ8yWE=';

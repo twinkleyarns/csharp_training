@@ -12,12 +12,16 @@ namespace mantis_tests
 {
     public class ApplicationManager
     {
+        protected const string baseUrl = "http://localhost:10080/mantisbt-2.24.2/";
         protected IWebDriver driver;
 
         public RegistrationHelper Registration { get; set; }
         public FtpHelper Ftp { get; set; }
         public JamesHelper James { get; set; }
         public MailHelper Mail { get; set; }
+        public LoginHelper Auth { get; set; }
+        public ManagementMenuHelper Navigator { get; set; }
+        public ProjectManagementHelper Projects { get; set; }
 
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
@@ -28,6 +32,9 @@ namespace mantis_tests
             Ftp = new FtpHelper(this);
             James = new JamesHelper(this);
             Mail = new MailHelper(this);
+            Auth = new LoginHelper(this);
+            Navigator = new ManagementMenuHelper(this, baseUrl);
+            Projects = new ProjectManagementHelper(this);
         }
 
         ~ApplicationManager()
@@ -47,7 +54,7 @@ namespace mantis_tests
             if (!app.IsValueCreated)
             {
                 ApplicationManager newInstance = new ApplicationManager();
-                newInstance.driver.Url = "http://localhost:10080/mantisbt-2.24.2/login_page.php";
+                newInstance.driver.Url = baseUrl;
                 app.Value = newInstance;
             }
             return app.Value;
