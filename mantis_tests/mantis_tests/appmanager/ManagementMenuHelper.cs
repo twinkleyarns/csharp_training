@@ -19,15 +19,6 @@ namespace mantis_tests
             this.baseURL = baseURL;
         }
 
-        public void GoToHomePage()
-        {
-            if (driver.Url == baseURL)
-            {
-                return;
-            }
-            driver.Navigate().GoToUrl(baseURL);
-        }
-
         public void GoToProjectsPage()
         {
             if (driver.Url == (baseURL + "manage_proj_page.php")

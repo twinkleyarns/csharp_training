@@ -22,6 +22,7 @@ namespace mantis_tests
         public LoginHelper Auth { get; set; }
         public ManagementMenuHelper Navigator { get; set; }
         public ProjectManagementHelper Projects { get; set; }
+        public APIHelper API { get; set; }
 
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
@@ -35,6 +36,7 @@ namespace mantis_tests
             Auth = new LoginHelper(this);
             Navigator = new ManagementMenuHelper(this, baseUrl);
             Projects = new ProjectManagementHelper(this);
+            API = new APIHelper(this);
         }
 
         ~ApplicationManager()
@@ -54,7 +56,7 @@ namespace mantis_tests
             if (!app.IsValueCreated)
             {
                 ApplicationManager newInstance = new ApplicationManager();
-                newInstance.driver.Url = baseUrl;
+                newInstance.driver.Url = baseUrl + "/login_page.php";
                 app.Value = newInstance;
             }
             return app.Value;

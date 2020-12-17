@@ -11,16 +11,24 @@ namespace mantis_tests
         [Test]
         public void DeleteProjectTest()
         {
+            AccountData account = new AccountData()
+            {
+                Name = "administrator",
+                Password = "root"
+            };
+
             app.Projects.CreateProjectIfDoesNotExist(new ProjectData(DateTime.Now.ToString("mm/dd/yyyy hh:mm:ss")));
 
-            List<ProjectData> oldProjects = app.Projects.GetProjectsList();
+            List<ProjectData> oldProjects = app.API.GetProjectsList(account);
             ProjectData toBeRemoved = oldProjects[0];
             app.Projects.Remove(toBeRemoved);
 
             Assert.AreEqual(oldProjects.Count - 1, app.Projects.GetProjectsCount());
 
-            List<ProjectData> newProjects = app.Projects.GetProjectsList();
+            List<ProjectData> newProjects = app.API.GetProjectsList(account);
             oldProjects.RemoveAt(0);
+            oldProjects.Sort();
+            newProjects.Sort();
             Assert.AreEqual(oldProjects, newProjects);
 
             foreach (ProjectData project in newProjects)
